@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Load environment variables from .env
 dotenv.config();
 
 // Import routes
@@ -15,7 +14,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // for parsing application/json
+app.use(express.json()); 
 
 // MongoDB Connection
 mongoose.connect(process.env.DB_URI, {
@@ -31,8 +30,8 @@ app.get('/', (req, res) => {
 });
 
 // Use routes
-app.use('/api', authRoutes);        // for /register and /login
-app.use('/api/users', userRoutes);  // for /users list, etc.
+app.use('/api', authRoutes);        
+app.use('/api/users', userRoutes);  
 
 // Start the server
 const PORT = process.env.PORT || 5000;

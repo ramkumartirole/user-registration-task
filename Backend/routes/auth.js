@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// ✅ Register Route
+// 🔐 Register User
 router.post('/register', async (req, res) => {
   try {
     const {
@@ -21,13 +21,12 @@ router.post('/register', async (req, res) => {
       profilePicture,
     } = req.body;
 
-    // Required field check
     if (!firstName || !lastName || !email || !password || !gender || !city || !state || !zip || !country) {
       return res.status(400).json({ message: 'Please fill all required fields.' });
     }
 
-    const userExists = await User.findOne({ email });
-    if (userExists) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
@@ -56,12 +55,11 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ✅ Login Route
+// 🔐 Login User
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
@@ -76,10 +74,14 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, 'yourSecretKey', { expiresIn: '1d' });
+    const token = jwt.sign(
+      { id: user._id }, // ✅ correct key
+      process.env.JWT_SECRET, // ✅ must be defined in .env
+      { expiresIn: '1d' }
+    );
 
     res.status(200).json({ token });
+
   } catch (error) {
     console.error('🔴 Login Error:', error.message);
     res.status(500).json({ message: 'Error during login', error: error.message });
