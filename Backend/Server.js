@@ -5,28 +5,42 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// Load env variables
 dotenv.config();
+
+// Import models
+const User = require('./models/User');
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
+
+// Initialize app
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Basic route for testing
+// MongoDB connection
+mongoose.connect(process.env.DB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch((err) => console.error('❌ MongoDB connection error:', err));
+
+// Test route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// MongoDB connection
-mongoose.connect(process.env.DB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB connected'))
-.catch((err) => console.error('MongoDB connection error:', err));
+// Use routes
+app.use('/api', authRoutes);        // For: /register, /login, /forgot-password, /reset-password
+app.use('/api/users', userRoutes);  // For: /api/users GET, PUT, DELETE
 
-// Start the server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
