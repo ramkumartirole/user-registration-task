@@ -1,8 +1,10 @@
+// routes/users.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+// Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -20,7 +22,8 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-router.get('/', async (req, res) => {
+// GET all users (admin)
+router.get('/', verifyToken, async (req, res) => {
   try {
     const users = await User.find().select('-password');
     res.status(200).json(users);
@@ -34,7 +37,6 @@ router.get('/me', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
-
     res.status(200).json(user);
   } catch (err) {
     console.error('❌ Error fetching logged-in user:', err);
@@ -42,13 +44,11 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    }).select('-password');
     res.status(200).json(updatedUser);
   } catch (err) {
     console.error('❌ Error updating user:', err);
@@ -56,8 +56,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'User deleted successfully' });
@@ -68,5 +67,3 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
-
-
