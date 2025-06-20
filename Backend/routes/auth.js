@@ -90,7 +90,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ✅ Forgot Password
 router.post('/forgot-password', async (req, res) => {
   try {
     const { email } = req.body;
