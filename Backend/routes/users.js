@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// ✅ Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -21,7 +20,6 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// ✅ Get all users (admin or list)
 router.get('/', async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -32,7 +30,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ Get logged-in user's data
 router.get('/me', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password');
@@ -45,7 +42,6 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
-// ✅ Edit user by ID
 router.put('/:id', async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -60,7 +56,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ✅ Delete user by ID
+
 router.delete('/:id', async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
@@ -72,3 +68,5 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+
+

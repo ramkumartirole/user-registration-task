@@ -8,13 +8,14 @@ dotenv.config();
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const passwordRoutes = require('./routes/password'); 
 
 // Initialize app
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.DB_URI, {
@@ -30,8 +31,9 @@ app.get('/', (req, res) => {
 });
 
 // Use routes
-app.use('/api', authRoutes);        
-app.use('/api/users', userRoutes);  
+app.use('/api', authRoutes);           
+app.use('/api/users', userRoutes);     
+app.use('/api', passwordRoutes);      
 
 // Start the server
 const PORT = process.env.PORT || 5000;

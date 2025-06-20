@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
   country:   { type: String, required: true },      
   areaOfInterest: { type: [String] },
   profilePicture: { type: String },
+  resetToken: { type: String },                
+  resetTokenExpiry: { type: Date },            
   createdAt: { type: Date, default: Date.now }
 });
 
