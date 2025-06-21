@@ -69,7 +69,8 @@ const RegistrationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    setSuccessMessage('Registration successful!');
+    //setSuccessMessage('Registration successful!');
+    alert('Registration successful!');
     setFormData({
       firstName: '',
       lastName: '',
@@ -89,7 +90,7 @@ const RegistrationForm = () => {
         <label>First Name </label>
         <input type="text" id="fname" name="fname" required></input><br />
         <label> Last Name</label>
-        <input type="text" id="lname" name="lname" required></input> <br />
+        <input type="text" id="lname" name="lname" required></input> <br/>
 
         <label>Gender: </label>
         <div>
