@@ -1,0 +1,28 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import RegistrationForm from './components/RegistrationForm';
+import LoginPage from './pages/LoginPage';
+import UserListPage from './components/UserList';
+import UserDashboard from './components/UserDashboard';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import AdminDashboard from './components/AdminDashboard';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/users" element={<UserListPage />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
