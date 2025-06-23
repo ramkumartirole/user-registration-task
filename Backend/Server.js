@@ -8,7 +8,8 @@ dotenv.config();
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
-const passwordRoutes = require('./routes/password'); 
+const passwordRoutes = require('./routes/password');
+const adminAuthRoutes = require('./routes/adminAuth'); // ✅ NEW
 
 // Initialize app
 const app = express();
@@ -31,9 +32,10 @@ app.get('/', (req, res) => {
 });
 
 // Use routes
-app.use('/api', authRoutes);           
-app.use('/api/users', userRoutes);     
-app.use('/api', passwordRoutes);      
+app.use('/api', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api', passwordRoutes);
+app.use('/api/auth/admin', adminAuthRoutes); // ✅ NEW
 
 // Start the server
 const PORT = process.env.PORT || 5000;

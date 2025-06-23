@@ -16,8 +16,9 @@ import {
   DialogActions,
   TextField,
   Chip,
-  Box
+  Box,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -35,6 +36,7 @@ const AdminDashboard = () => {
     areaOfInterest: [],
   });
 
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -51,6 +53,11 @@ const AdminDashboard = () => {
     };
     fetchUsers();
   }, [token]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/admin-login');
+  };
 
   const handleEditClick = (user) => {
     setEditUser(user);
@@ -113,9 +120,12 @@ const AdminDashboard = () => {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <Typography variant="h4" gutterBottom>
-        Admin Dashboard - User Management
-      </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">Admin Dashboard - User Management</Typography>
+        <Button variant="contained" color="error" onClick={handleLogout}>
+          Logout
+        </Button>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table>

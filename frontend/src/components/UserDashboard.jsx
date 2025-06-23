@@ -201,7 +201,7 @@ const UserDashboard = () => {
                 label={interest}
                 color="primary"
                 variant="outlined"
-                clickable={false} // ✅ Fix: Make sure chip is not interactive
+                clickable={false} 
               />
             ))
           ) : (

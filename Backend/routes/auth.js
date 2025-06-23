@@ -6,7 +6,6 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
 
-// ✅ Register
 router.post('/register', async (req, res) => {
   try {
     const {
@@ -57,7 +56,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ✅ Login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -99,7 +97,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetToken = resetToken;
-    user.resetTokenExpiry = Date.now() + 3600000; // 1 hour
+    user.resetTokenExpiry = Date.now() + 3600000; 
     await user.save();
 
     const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
@@ -126,7 +124,6 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-
 router.post('/reset-password/:token', async (req, res) => {
   try {
     const { password } = req.body;
@@ -152,3 +149,5 @@ router.post('/reset-password/:token', async (req, res) => {
 });
 
 module.exports = router;
+ 
+

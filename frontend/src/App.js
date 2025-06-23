@@ -7,6 +7,8 @@ import UserDashboard from './components/UserDashboard';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminDashboard from './components/AdminDashboard';
+import AdminLogin from './pages/AdminLogin';
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
       </Routes>
     </Router>
   );

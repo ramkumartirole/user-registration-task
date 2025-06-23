@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState(null); // null, 'user', or 'admin'
+  const [role, setRole] = useState(null); 
 
   return (
     <Box
@@ -22,7 +22,6 @@ const HomePage = () => {
         Welcome to the User Management App
       </Typography>
 
-      {/* Role selection */}
       {!role && (
         <Box display="flex" gap={2}>
           <Button variant="contained" color="primary" onClick={() => setRole('user')}>
@@ -52,7 +51,7 @@ const HomePage = () => {
       {/* Admin option */}
       {role === 'admin' && (
         <Box display="flex" gap={2}>
-          <Button variant="contained" color="secondary" onClick={() => navigate('/admin-dashboard')}>
+          <Button variant="contained" color="secondary" onClick={() => navigate('/admin-login')}>
             Admin Login
           </Button>
           <Button variant="text" color="error" onClick={() => setRole(null)}>
@@ -63,5 +62,6 @@ const HomePage = () => {
     </Box>
   );
 };
+
 
 export default HomePage;
