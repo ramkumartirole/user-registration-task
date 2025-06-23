@@ -4,14 +4,19 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require("multer");
 const mongoose = require('mongoose');
+const authController = require("./controller/authController")
+const Login = require("./controller/login")
+const forgetPassword = require("./controller/forgotPassword")
+const resetPassword =require("./controller/resetPassword")
+const verifyToken = require("./controller/verifyToken")
 
-// Initialize Express app
+
+
 const app = express();
 const PORT = process.env.PORT ;
 
-// Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // or '*' for testing
+  origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
@@ -24,12 +29,6 @@ mongoose.connect('mongodb+srv://admin:zainikram98@zain.osym9wq.mongodb.net/Full_
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-
-// Basic route
-app.get('/', (req, res) => {
-  res.send('Node.js Server is Running!');
-});
-// const storage = multer.memoryStorage(); // ya diskStorage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "D:/user-registration-task/my-server/upload");
@@ -38,21 +37,21 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
-
 const upload = multer({ storage });
 
-// Example API endpoint
-app.post("/api/submit", upload.single("profileImage"), (req, res) => {
-  const { firstName, email } = req.body;
-  const image = req.file;
-
-  console.log("Name:", firstName);       // ✅ aayega
-  console.log("Email:", email);     // ✅ aayega
-  console.log("Image:", image);     // ✅ aayega
-
-  res.json({ success: true });
+// Basic route
+app.get('/', (req, res) => {
+  res.send('Node.js Server is Running!');
 });
+app.get('/verify',verifyToken, (req, res) => {
+  res.send('secure routes!');
+});
+app.post('/api/submit', upload.single('profileImage'), authController.register);
 
+// login
+app.use('/api/login', Login);
+app.use('/forgot-password', forgetPassword);
+app.use('/reset-password', resetPassword);
 
 // Start server
 app.listen(PORT, () => {

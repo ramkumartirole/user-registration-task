@@ -1,17 +1,19 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 export const SignupApi = async (formData) => {
-  console.log()
+
   try {
     const response = await axios.post("http://localhost:8000/api/submit", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data;
+    toast.success("Registration successfull")
+    return response;
   } catch (error) {
-    console.error("Upload API Error:", error);
-    throw error;
+toast.error(error?.response?.data?.error?.message
+);
   }
 };
