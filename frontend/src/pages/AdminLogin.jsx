@@ -7,10 +7,9 @@ const AdminLogin = () => {
   const [adminEmail, setAdminEmail] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
   const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // 1 = login, 2 = OTP
+  const [step, setStep] = useState(1); 
   const [error, setError] = useState('');
 
-  // Step 1: Verify email/password and send OTP
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,7 +22,7 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setStep(2); // Proceed to OTP input
+        setStep(2); 
         setError('');
       } else {
         setError(data.message || 'Invalid credentials');
@@ -34,7 +33,6 @@ const AdminLogin = () => {
     }
   };
 
-  // Step 2: Verify OTP and get JWT
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {

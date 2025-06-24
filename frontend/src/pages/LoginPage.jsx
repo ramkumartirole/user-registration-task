@@ -1,4 +1,3 @@
-// components/LoginPage.js
 import React, { useState } from 'react';
 import {
   TextField,

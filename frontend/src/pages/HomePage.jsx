@@ -33,7 +33,6 @@ const HomePage = () => {
         </Box>
       )}
 
-      {/* User options */}
       {role === 'user' && (
         <Box display="flex" gap={2}>
           <Button variant="contained" color="primary" onClick={() => navigate('/register')}>
