@@ -35,18 +35,31 @@ router.post("/", upload.single("profilePicture"), async (req, res) => {
 			state,
 			zip,
 			country,
+			gender,
 		} = req.body;
 
 		const areaOfInterest = JSON.parse(req.body.areaOfInterest || "[]");
-
 		const profilePicture = req.file ? req.file.filename : null;
 
-		// Validate only required fields for now
-		const { error } = validate({ firstName, lastName, email, password });
+		// Validate input
+		const { error } = validate({
+			firstName,
+			lastName,
+			email,
+			password,
+			confirmPassword,
+			city,
+			state,
+			zip,
+			country,
+			gender,
+			areaOfInterest,
+		});
+
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
 
-		// Check if user already exists
+		// Check for duplicate email
 		const existingUser = await User.findOne({ email });
 		if (existingUser)
 			return res.status(409).send({ message: "User with given email already exists" });
@@ -55,7 +68,7 @@ router.post("/", upload.single("profilePicture"), async (req, res) => {
 		const salt = await bcrypt.genSalt(Number(process.env.SALT));
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		// Create user
+		// Create and save new user
 		const newUser = new User({
 			firstName,
 			lastName,
@@ -65,20 +78,26 @@ router.post("/", upload.single("profilePicture"), async (req, res) => {
 			state,
 			zip,
 			country,
+			gender,
 			areaOfInterest,
 			profilePicture,
 		});
 
 		await newUser.save();
-		res.status(201).send({ message: "User created successfully" });
+
+		// Optional: generate token
+		const token = newUser.generateAuthToken?.();
+
+		res.status(201).send({
+			message: "User created successfully",
+			token, // Optional
+		});
 	} catch (error) {
 		console.error("Registration error:", error);
 		res.status(500).send({ message: "Internal Server Error" });
 	}
+
+	
 });
 
 module.exports = router;
-
-
-
-
