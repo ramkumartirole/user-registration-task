@@ -63,7 +63,8 @@ const handleClick = () => {
 							className={styles.input}
 						/>
 						{error && <div className={styles.error_msg}>{error}</div>}
-						<button type="submit" className={styles.green_btn}>
+						<button type="submit" className={styles.green_btn} 
+						onClick={handleSubmit}   >
 							Sign In
 						</button>
 					</form>
@@ -75,9 +76,6 @@ const handleClick = () => {
 							Sign Up
 						</button>
 					</Link>
-					{/* <Link to= "/register">
-						Registation Form
-					</Link> */}
 				</div>
 			</div>
 		</div>

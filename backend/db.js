@@ -1,7 +1,6 @@
-
 const mongoose = require("mongoose");
 
-module.exports =  () => {
+module.exports = () => {
   const connectionParams = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -15,4 +14,3 @@ module.exports =  () => {
     console.log("Could not connect to DB");
   }
 };
-
