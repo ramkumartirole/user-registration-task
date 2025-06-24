@@ -39,19 +39,22 @@ export default function Login() {
     };
     return (
         <div className="relative min-h-screen w-full">
-  {/* Full Background Image */}
-  <div className="absolute inset-0 z-0">
-    <img
-      src="/leftImage.jpg" // Replace with your image
-      alt="Background"
-      className="w-full h-full object-cover"
-    />
+   <div className="absolute inset-0 z-0 bg-blue-500 ">
+    <div className=' flex  ml-20 items-center h-screen text-gray-100'>
+
+      <div className='w-2/6'>
+<h2 className='text-3xl font-mono font-bold '>Welcome Again</h2>
+         Log in to access your personalized dashboard, saved preferences, and exclusive member benefits.
+
+        </div>
+    </div>
+
   </div>
 
-  {/* Form Container */}
+
   <div className="absolute right-0 top-0 bottom-0 w-full md:w-2/3 lg:w-2/4 z-10 bg-white bg-opacity-90 overflow-y-auto">
     <div className="max-w-md mx-auto p-4 rounded-lg">
-      <h2 className='text-2xl my-4 font-semibold'>Login</h2>
+      <h2 className='text-4xl mb-8 font-semibold text-center'>Login</h2>
       <form onSubmit={handleSubmit}>
         {/* Email Field */}
         <InputText
@@ -82,7 +85,7 @@ export default function Login() {
 
       {/* Login Link */}
       <p className="mt-4 text-center">
-       Dont have an account <Link to="/" className="text-blue-600 underline"> Registration</Link>
+       Dont have an account <Link to="/signup" className="text-blue-600 underline"> Registration</Link>
       </p>
     </div>
  <div className="mt-4 text-center">
@@ -94,7 +97,7 @@ export default function Login() {
           </button>
         </div>
 
-        {/* Forgot Password Modal */}
+
         {showForgotPassword && (
           <ForgotPasswordModal onClose={() => setShowForgotPassword(false)} />
         )}

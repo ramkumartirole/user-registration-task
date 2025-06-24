@@ -1,28 +1,20 @@
 import { useState } from "react";
+import { ForgetPasswordApi } from "../../api/auth/forgetPasswordApi";
 export default function ForgotPasswordModal({ onClose }) {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // API call to send reset link
-      const response = await fetch('http://localhost:8000/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      if (response.ok) {
-        setMessage('Password reset link sent to your email');
-      } else {
-        setMessage('Error sending reset link');
-      }
+const res = await ForgetPasswordApi({
+  email:email
+})
     } catch (error) {
-      setMessage('An error occurred');
+
     } finally {
       setIsLoading(false);
     }
@@ -38,9 +30,7 @@ export default function ForgotPasswordModal({ onClose }) {
           </button>
         </div>
 
-        {message ? (
-          <p className="mb-4 text-green-600">{message}</p>
-        ) : (
+
           <>
             <p className="mb-4">Enter your email to receive a reset link</p>
             <form onSubmit={handleSubmit}>
@@ -61,7 +51,7 @@ export default function ForgotPasswordModal({ onClose }) {
               </button>
             </form>
           </>
-        )}
+
       </div>
     </div>
   );

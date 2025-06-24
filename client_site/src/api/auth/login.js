@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 export const LoginApi = async (formData,navigate) => {
   try {
-    const response = await axios.post("http://localhost:8000/api/login", formData, {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}api/login`, formData, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -16,7 +16,8 @@ export const LoginApi = async (formData,navigate) => {
     navigate("/dashboard")
     return response;
   } catch (error) {
-    toast.error(error?.response?.data?.error?.message
+    toast.error(error?.response?.data?.message
     );
+
   }
 };
