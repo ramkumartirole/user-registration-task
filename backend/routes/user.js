@@ -151,9 +151,6 @@ router.put("/updateUser/:id", async (req, res) => {
   }
 });
 
-const express = require("express");
-const router = express.Router();
-const User = require("../models/User"); // adjust path if needed
 const nodemailer = require("nodemailer"); // if you're sending reset link
 
 router.post("/forgot-password", async (req, res) => {

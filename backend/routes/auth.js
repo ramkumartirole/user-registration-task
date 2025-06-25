@@ -38,12 +38,3 @@ const validate = (data) => {
 
 module.exports = router;
 
-
-
-// router.post('/forgot-password', async (req, res) => {
-//   // save resetToken in DB and optionally email or return link
-// });
-
-// router.put('/reset-password/:token', async (req, res) => {
-//   // verify, hash new password, clear token
-// });
