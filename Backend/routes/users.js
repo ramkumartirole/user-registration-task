@@ -1,10 +1,11 @@
-// routes/users.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { resetUserPasswordByAdmin } = require('../controllers/userController');
+const { verifyAdminToken } = require('../middleware/authMiddleware'); // ✅ Import admin middleware
 
-// Middleware to verify JWT token
+// Middleware to verify JWT token (for regular users or general access)
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -22,7 +23,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// GET all users (admin)
+// GET all users
 router.get('/', verifyToken, async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -33,6 +34,7 @@ router.get('/', verifyToken, async (req, res) => {
   }
 });
 
+// GET current user profile
 router.get('/me', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password');
@@ -44,6 +46,7 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
+// UPDATE user
 router.put('/:id', verifyToken, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -56,6 +59,7 @@ router.put('/:id', verifyToken, async (req, res) => {
   }
 });
 
+// DELETE user
 router.delete('/:id', verifyToken, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
@@ -65,5 +69,8 @@ router.delete('/:id', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Error deleting user', error: err.message });
   }
 });
+
+// ✅ RESET user password (admin only)
+router.put('/:id/reset-password', verifyAdminToken, resetUserPasswordByAdmin);
 
 module.exports = router;

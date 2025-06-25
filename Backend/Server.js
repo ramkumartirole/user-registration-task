@@ -9,9 +9,8 @@ dotenv.config();
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const passwordRoutes = require('./routes/password');
-const adminAuthRoutes = require('./routes/adminAuth'); // ✅ NEW
+const adminAuthRoutes = require('./routes/adminAuth');
 
-// Initialize app
 const app = express();
 
 // Middleware
@@ -31,11 +30,11 @@ app.get('/', (req, res) => {
   res.send('✅ API is running...');
 });
 
-// Use routes
-app.use('/api', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api', passwordRoutes);
-app.use('/api/auth/admin', adminAuthRoutes); // ✅ NEW
+// Use routes (✅ grouped logically)
+app.use('/api/auth', authRoutes);           // ✅ Register, Login, Forgot Password
+app.use('/api/users', userRoutes);          // ✅ User CRUD
+app.use('/api/password', passwordRoutes);   // ✅ Optional: separate reset logic if needed
+app.use('/api/auth/admin', adminAuthRoutes); // ✅ Admin OTP login
 
 // Start the server
 const PORT = process.env.PORT || 5000;
