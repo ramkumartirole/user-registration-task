@@ -109,4 +109,75 @@ router.get("/getAllUsers", async (req, res) => {
   }
 });
 
+// Example: routes/userRoutes.js or inside app.js
+router.delete("/deleteUser/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// PUT: Update user (excluding email)
+router.put("/updateUser/:id", async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        areaOfInterest: req.body.areaOfInterest,
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+const express = require("express");
+const router = express.Router();
+const User = require("../models/User"); // adjust path if needed
+const nodemailer = require("nodemailer"); // if you're sending reset link
+
+router.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Example: send reset email (you can replace with real logic)
+    console.log(`Send reset link to: ${email}`);
+    return res.status(200).json({ message: "Reset email sent" });
+  } catch (err) {
+    console.error("Forgot password error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;
+
+
+module.exports = router;
+
+
+

@@ -2,11 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
-// import { useParams } from 'react-router-dom';
-// import ResetPassword from "../ForgotPassword/ResetPassword";
-// // ✅ get token from /reset-password/:token
-
-
 
 const LoginForm = () => {
 	const [data, setData] = useState({ email: "", password: "" });

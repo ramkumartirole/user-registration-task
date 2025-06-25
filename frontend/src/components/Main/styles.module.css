@@ -25,37 +25,10 @@
 	cursor: pointer;
 	margin-right: 20px;
 }
-
-
-
-
-
-
 .main_container {
   padding: 20px;
   font-family: Arial, sans-serif;
 }
-
-/* .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0066cc;
-  color: white;
-  padding: 15px 20px;
-  border-radius: 6px;
-} */
-
-.white_btn {
-  background-color: white;
-  color: #0066cc;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
 .grid_container {
   margin-top: 20px;
   display: grid;
@@ -69,3 +42,97 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
+
+/* styles.module.css */
+
+.main_container {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.white_btn {
+  background-color: white;
+  /* color: #1976d2;
+  border: 1px solid #1976d2; */
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.white_btn:hover {
+  background-color: #e3f2fd;
+}
+
+.grid_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card p {
+  margin: 8px 0;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.actions button:first-of-type {
+  background-color: #3bb19b;
+  color: white;
+}
+
+.actions button:first-of-type:hover {
+  background-color: #3bb19b;
+}
+
+.actions button:last-of-type {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.actions button:last-of-type:hover {
+  background-color: #9a0007;
+}
+
+/* Input styles for edit mode */
+.card input {
+  width: 100%;
+  margin: 6px 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+
+

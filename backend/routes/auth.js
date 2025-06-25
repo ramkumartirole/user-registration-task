@@ -36,11 +36,6 @@ const validate = (data) => {
 	return schema.validate(data);
 };
 
-// axios.post(`/api/reset-password/${token}`, {
-//   newPassword,
-//   confirmPassword,
-// });
-
 module.exports = router;
 
 
