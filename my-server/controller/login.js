@@ -4,8 +4,10 @@ const router = express.Router();
 const User = require("../model/user")
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
 
-
+const app = express();
+app.use(cookieParser());
 router.post('/', async (req, res) => {
 
   try {
@@ -39,18 +41,30 @@ router.post('/', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
+        res.cookie('token', token, {
+      httpOnly: true,          // Prevent XSS attacks
+      // secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',       // Prevent CSRF attacks
+      maxAge: 3600000,          // 1 hour expiry (matches JWT)
+    });
+
+
 
     res.json({
       success: true,
       token,
       user: {
-        id: user._id,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        _id: user._id,
         email: user.email,
         city: user.city ? user.city.name : null,
         state: user.state ? user.state.name : null,
         gender: user.gender,
         country: user.country,
-        activity: user.activity
+        activity: user.activity,
+        profileImage:user.profileImage,
+
       }
     });
 

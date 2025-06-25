@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 
-export const SignupApi = async (formData,navigate) => {
+export const SignupApi = async (formData,navigate, signVal, setValue) => {
 
   try {
     const response = await axios.post(`${process.env.REACT_APP_API_URL}api/submit`, formData, {
@@ -11,7 +11,12 @@ export const SignupApi = async (formData,navigate) => {
       },
     });
     toast.success("Registration successfull")
-    navigate("/")
+    if(signVal === true){
+ setValue("Home")
+    }
+else{
+  navigate("/")
+}
     return response;
   } catch (error) {
 toast.error(error?.response?.data?.error?.message

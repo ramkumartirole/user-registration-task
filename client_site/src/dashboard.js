@@ -1,135 +1,86 @@
-import { useState,useEffect } from "react";
-import { getUsers } from "./api/users/getAllUsers";
+import { useState, useEffect } from "react";
 import SubmitButton from "./components/button/submitButton";
 import { IoHomeOutline } from "react-icons/io5";
+import { GoSignIn } from "react-icons/go";
 import { BsPersonFill } from "react-icons/bs";
-import { useDispatch,useSelector } from 'react-redux';
-import { setEditUser } from "./redux/slice/Edit";
-import { DeleteUser } from "./api/users/deleteUser";
-import {setUserData} from "./redux/slice/UserData"
 import { useNavigate } from "react-router-dom";
-
-
-
-
+import { Logout } from "./services/logout";
+import MainBody from "./components/mainBody/index.js";
+import Profile from "./components/profile/index.js";
+import Signup from "./components/auth/signup.js"
+import { clearEditUser } from "./redux/slice/Edit.js";
+import { useDispatch } from "react-redux";
 export default function Dashboard() {
-  const data = useSelector((state)=>state.userData.userData)
+
   const navigate = useNavigate()
-  const [token,setToken]=useState(null)
-  const distpatch = useDispatch()
+  const dispatch = useDispatch()
+  const [token, setToken] = useState(null)
+  const [value, setValue] = useState("Home")
+  const [signVal, setSignVal] = useState(false)
 
-useEffect(()=>{
-  const token = localStorage.getItem("token")
-  setToken(token)
-  const fetch = async()=>{
-    const res = await getUsers()
 
-distpatch(setUserData(res.allUser))
-  }
-  fetch()
-},[])
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    setToken(token)
+
+  }, [])
 
   return (
-    <div className="flex h-screen gap-8">
-      <div className="w-1/6 bg-white shadow rounded-lg flex flex-col">
-  <nav className="flex-1 flex flex-col">
-    <ul className="flex-1">
-      <div className="p-4 border-b border-gray-200">
-        <li className="text-2xl font-bold text-blue-500">Dashboard</li>
+    <>
+
+      <div className="flex h-screen overflow-hidden bg-gray-100">
+        {/* Sidebar */}
+        <aside className="w-64 p-10 bg-white shadow-lg rounded-r-2xl flex flex-col justify-between">
+          <nav>
+            <h2 className="text-2xl font-extrabold text-blue-600 mb-6 border-b py-4">Dashboard</h2>
+            <ul className="space-y-3">
+              <li onClick={() => setValue("Home")} className="flex items-center p-2 font-medium text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-lg transition">
+                <IoHomeOutline className="mr-2" />
+                Home
+              </li>
+              <li onClick={() => setValue("Profile")} className="flex items-center p-2 font-medium text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-lg transition">
+                <BsPersonFill className="mr-2" />
+                Profile
+              </li>
+              <li onClick={() => {
+                setValue("Signup")
+                setSignVal(true)
+                dispatch(clearEditUser())
+
+              }} className="flex items-center p-2 font-medium text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-lg transition">
+                <GoSignIn className="mr-2" />
+                Register User
+              </li>
+            </ul>
+          </nav>
+          <div className="pt-4 border-t">
+            {token ? (
+              <SubmitButton
+                onClick={() => Logout(navigate)}
+                type="button"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
+              >
+                Logout
+              </SubmitButton>
+            ) : (
+              <SubmitButton
+                onClick={() => navigate('/')}
+                type="button"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
+              >
+                Login
+              </SubmitButton>
+            )}
+          </div>
+        </aside>
+
+        {/* Main Content Area with internal scroll */}
+        <main className="flex-1 h-full overflow-y-auto p-6">
+          {value === "Profile" ? <Profile /> : value === "Home" ? <MainBody /> : value === "Signup" ? <Signup signVal={signVal} setValue={setValue} /> : <MainBody />}
+        </main>
       </div>
-      <div className="p-4 space-y-3">
-        <li className="p-2 font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors cursor-pointer">
-          <IoHomeOutline className="inline mr-2 mb-1" />
-          Home
-        </li>
-        <li className="p-2 font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors cursor-pointer">
-          <BsPersonFill className="inline mr-2 mb-1" />
-          Profile
-        </li>
-      </div>
-    </ul>
 
-    <div className="p-4 border-t border-gray-200">
-      {token ? (
-        <SubmitButton
-          type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-colors"
-        >
-          Logout
-        </SubmitButton>
-      ) : (
-        <SubmitButton
-          type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-colors"
-        >
-          Login
-        </SubmitButton>
-      )}
-    </div>
-  </nav>
-</div>
-    <div className="flex flex-col h-screen bg-gray-50 p-4">
-  <div className="bg-white shadow rounded-lg flex flex-col h-full overflow-hidden">
-    <div className="p-4">
-      <h2 className="text-gray-500 text-lg font-semibold pb-4">User Data</h2>
-      <div className="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
-    </div>
-
-    <div className="flex-1 overflow-auto px-4 pb-4">
-      <table className="w-full text-sm">
-        <thead className="sticky top-0 bg-white">
-          <tr className="text-sm leading-normal">
-            <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Photo</th>
-            <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
-            <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Email</th>
-            <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Activities</th>
-            <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Gender</th>
-            <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((user) => (
-            <tr key={user._id} className="hover:bg-grey-lighter">
-              <td className="py-2 px-4 border-b border-grey-light">
-                <img
-                  src={user.profileImage}
-                  alt="Profile"
-                  className="rounded-full h-10 w-10 object-cover"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/40';
-                  }}
-                />
-              </td>
-              <td className="py-2 px-4 border-b border-grey-light">
-                {user.firstName} {user.lastName}
-              </td>
-              <td className="py-2 px-4 border-b border-grey-light">{user.email}</td>
-              <td className="py-2 px-4 border-b border-grey-light">
-                <div className="flex flex-wrap gap-1">
-                  {user.activity.map((activity, index) => (
-                    <span
-                      key={index}
-                      className="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded"
-                    >
-                      {activity}
-                    </span>
-                  ))}
-                </div>
-              </td>
-              <td className="py-2 px-4 border-b border-grey-light capitalize">{user.gender}</td>
-              <td className="py-2 px-4 border-b border-grey-light capitalize">
-                <button onClick={()=>{distpatch((setEditUser(user)));
-                  navigate("/signup")} } className="text-cyan-600 hover:text-cyan-800 mr-2">Edit</button>
-                <button onClick={()=>DeleteUser(user._id, distpatch)} className="text-red-600 hover:text-red-800">Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-    </div>
-
+    </>
   );
 };

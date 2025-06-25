@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   country: String,
   activity: String,
   activity: {
-    type: [String], // Array of strings
+    type: [String],
     default: []
   },
 

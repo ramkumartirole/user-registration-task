@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-  <div className="p-4 text-black text-center">
+  <div className=" text-black text-center">
      <ToastContainer/>
      <Router>
       <Routes>

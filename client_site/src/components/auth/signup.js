@@ -15,10 +15,12 @@ import { EditUser } from '../../api/users/editUser';
 
 
 
-export default function Signup() {
+export default function Signup({signVal, setValue}) {
+
   const editData = useSelector((state) => state.editUser.editUser)
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
+  console.log(editData, "admin")
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -51,64 +53,64 @@ export default function Signup() {
     { value: 'us', label: 'United States' },
     { value: 'uk', label: 'United Kingdom' },
   ];
-const activityOptions = [
-  { value: 'reading', label: 'Reading' },
-  { value: 'traveling', label: 'Traveling' },
-  { value: 'sports', label: 'Sports' },
-  { value: 'photography', label: 'Photography' },
-  { value: 'cooking', label: 'Cooking' },
-  { value: 'gaming', label: 'Gaming' },
-  { value: 'music', label: 'Music' },
-  { value: 'dancing', label: 'Dancing' },
-  { value: 'hiking', label: 'Hiking' },
-  { value: 'painting', label: 'Painting' },
-  { value: 'coding', label: 'Coding' },
-  { value: 'gardening', label: 'Gardening' },
-  { value: 'yoga', label: 'Yoga' },
-  { value: 'cycling', label: 'Cycling' },
-  { value: 'swimming', label: 'Swimming' }
-];
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+  const activityOptions = [
+    { value: 'reading', label: 'Reading' },
+    { value: 'traveling', label: 'Traveling' },
+    { value: 'sports', label: 'Sports' },
+    { value: 'photography', label: 'Photography' },
+    { value: 'cooking', label: 'Cooking' },
+    { value: 'gaming', label: 'Gaming' },
+    { value: 'music', label: 'Music' },
+    { value: 'dancing', label: 'Dancing' },
+    { value: 'hiking', label: 'Hiking' },
+    { value: 'painting', label: 'Painting' },
+    { value: 'coding', label: 'Coding' },
+    { value: 'gardening', label: 'Gardening' },
+    { value: 'yoga', label: 'Yoga' },
+    { value: 'cycling', label: 'Cycling' },
+    { value: 'swimming', label: 'Swimming' }
+  ];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  try {
-    const SendForm = new FormData();
+    try {
+      const SendForm = new FormData();
 
 
-    const fields = [
-      'firstName', 'lastName', 'gender', 'email', 'password',
-      'city', 'state', 'zip', 'country'
-    ];
+      const fields = [
+        'firstName', 'lastName', 'gender', 'email', 'password',
+        'city', 'state', 'zip', 'country'
+      ];
 
-    fields.forEach(field => {
-      if (formData[field]) SendForm.append(field, formData[field]);
-    });
+      fields.forEach(field => {
+        if (formData[field]) SendForm.append(field, formData[field]);
+      });
 
-    if (formData.profileImage) {
-      SendForm.append('profileImage', formData.profileImage);
-    }
-
-formData.activity.forEach((act)=>
-     SendForm.append('activity[]', act)
-)
-
-    if (editData?._id) {
-      await EditUser(editData._id, SendForm);
-    } else {
-      const errors = ValidateForm(formData);
-      if (Object.keys(errors).length > 0) {
-        Object.values(errors).forEach(toast);
-        return;
+      if (formData.profileImage) {
+        SendForm.append('profileImage', formData.profileImage);
       }
-      await SignupApi(SendForm, navigate);
+
+      formData.activity.forEach((act) =>
+        SendForm.append('activity[]', act)
+      )
+
+      if (editData?._id) {
+        await EditUser(editData._id, SendForm, navigate);
+      } else {
+        const errors = ValidateForm(formData);
+        if (Object.keys(errors).length > 0) {
+          Object.values(errors).forEach(toast);
+          return;
+        }
+        await SignupApi(SendForm, navigate, signVal, setValue);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    toast.error(error.response?.data?.message || error.message);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
   useEffect(() => {
     if (editData?._id) {
       setFormData({
@@ -117,8 +119,8 @@ formData.activity.forEach((act)=>
         email: editData.email || '',
         activity: editData.activity || [],
         country: editData.country || '',
-        city: editData.city || '',
-        state: editData.state || '',
+        city: editData.city.name || '',
+        state: editData.state.name || '',
         gender: editData.gender || '',
         zip: editData.zip || '',
       });
@@ -173,10 +175,10 @@ formData.activity.forEach((act)=>
               <InputText type="email" placeholder="Email" name="email" value={formData.email} onChange={(e) => handleChange("email", e.target.value, setFormData)} />
 
 
-              <div className="flex gap-3">
+              {editData ? "" : <div className="flex gap-3">
                 <InputText type="password" placeholder="Password" name="password" value={formData.password} onChange={(e) => handleChange("password", e.target.value, setFormData)} />
                 <InputText type="password" placeholder="Confirm" name="confirmPassword" value={formData.confirmPassword} onChange={(e) => handleChange("confirmPassword", e.target.value, setFormData)} />
-              </div>
+              </div>}
 
 
               <div className="flex gap-3">
@@ -195,29 +197,30 @@ formData.activity.forEach((act)=>
 
 
               <div className="pt-2">
-              <Checkbox
-  fieldName="activity"
-  options={activityOptions}
-  selectedValues={formData.activity || []}
-  onChange={handleChange}
-  setFormData={setFormData}
-/>
-</div>
+                <Checkbox
+                  fieldName="activity"
+                  options={activityOptions}
+                  selectedValues={formData.activity || []}
+                  onChange={handleChange}
+                  setFormData={setFormData}
+                />
+              </div>
 
 
               <FileUpload name="profileImage" onChange={handleChange} preview={false} setFormData={setFormData} />
 
-        
+
               <SubmitButton type="submit" className="w-full mt-4">
                 {isSubmitting ? "Saving..." : "Submit"}
               </SubmitButton>
             </form>
 
-            <p className="mt-4 text-sm text-center">
+{!signVal?            <p className="mt-4 text-sm text-center">
               Already registered? <Link to="/" className="text-blue-600 underline">Login Here</Link>
-            </p>
+            </p> :""}
           </div>
         </div>
+
       </div>
     </div>
   );

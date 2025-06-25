@@ -16,5 +16,5 @@ const EditUserSlice = createSlice({
   },
 });
 
-export const { setEditUser } = EditUserSlice.actions;
+export const { setEditUser, clearEditUser } = EditUserSlice.actions;
 export default EditUserSlice.reducer;

@@ -4,11 +4,10 @@ import { toast } from "react-toastify";
 
 export const LoginApi = async (formData,navigate) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}api/login`, formData, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}api/login`, formData,  {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true
+  });
 
     localStorage.setItem("user", JSON.stringify(response?.data?.user))
     localStorage.setItem("token", JSON.stringify(response?.data?.token))

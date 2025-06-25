@@ -7,9 +7,12 @@ import { Link } from "react-router-dom"
 import { LoginApi } from "../../api/auth/login"
 import { useNavigate } from 'react-router-dom';
 import ForgotPasswordModal from "./forgotPasswordModal"
+import { clearEditUser } from "../../redux/slice/Edit"
+import { useDispatch } from 'react-redux';
 
 
 export default function Login() {
+  const distpatch =useDispatch()
     const [isSubmitting, setIsSubmitting] = useState(false);
       const [showForgotPassword, setShowForgotPassword] = useState(false);
 
@@ -51,7 +54,6 @@ export default function Login() {
 
   </div>
 
-
   <div className="absolute right-0 top-0 bottom-0 w-full md:w-2/3 lg:w-2/4 z-10 bg-white bg-opacity-90 overflow-y-auto">
     <div className="max-w-md mx-auto p-4 rounded-lg">
       <h2 className='text-4xl mb-8 font-semibold text-center'>Login</h2>
@@ -84,7 +86,7 @@ export default function Login() {
       </form>
 
       {/* Login Link */}
-      <p className="mt-4 text-center">
+      <p onClick={()=>{distpatch(clearEditUser())}} className="mt-4 text-center">
        Dont have an account <Link to="/signup" className="text-blue-600 underline"> Registration</Link>
       </p>
     </div>
@@ -97,6 +99,38 @@ export default function Login() {
           </button>
         </div>
 
+{/* Social Login */}
+<div className="mt-8">
+  <div className="flex items-center justify-center mb-4">
+    <span className="text-gray-400 text-sm">or login with</span>
+  </div>
+
+  <div className="flex justify-center gap-4">
+    {/* Google */}
+    <button
+      className="bg-white border border-gray-200 shadow-md p-3 rounded-full hover:shadow-lg transition"
+      title="Login with Google"
+    >
+      <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google" className="w-6 h-6" />
+    </button>
+
+    {/* Twitter */}
+    <button
+      className="bg-white border border-gray-200 shadow-md p-3 rounded-full hover:shadow-lg transition"
+      title="Login with Twitter"
+    >
+      <img src="https://img.icons8.com/color/48/twitter--v1.png" alt="Twitter" className="w-6 h-6" />
+    </button>
+
+    {/* GitHub */}
+    <button
+      className="bg-white border border-gray-200 shadow-md p-3 rounded-full hover:shadow-lg transition"
+      title="Login with GitHub"
+    >
+      <img src="https://img.icons8.com/ios-glyphs/30/000000/github.png" alt="GitHub" className="w-6 h-6" />
+    </button>
+  </div>
+</div>
 
         {showForgotPassword && (
           <ForgotPasswordModal onClose={() => setShowForgotPassword(false)} />
