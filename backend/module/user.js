@@ -14,19 +14,31 @@ const userSchema = new mongoose.Schema({
 	profilePicture: { type: String }, // store filename
 });
 
+// creates a collection called users (default plural form).
 const User = mongoose.model("User", userSchema);
 
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 
-const validate = (data) => {
-	const schema = Joi.object({
-		firstName: Joi.string().required().label("First Name"),
-		lastName: Joi.string().required().label("Last Name"),
-		email: Joi.string().email().required().label("Email"),
-		password: passwordComplexity().required().label("Password"),
-	});
-	return schema.validate(data);
-};
+function validate(user) {
+  const schema = Joi.object({
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+    city: Joi.string().required(),
+    state: Joi.string().required(),
+    zip: Joi.string().required(),
+    country: Joi.string().required(),
+    gender: Joi.string().required(),
+    areaOfInterest: Joi.array().items(Joi.string()),
+    
+    // ✅ Add this to allow confirmPassword
+    confirmPassword: Joi.string().optional(),
+  });
+
+  return schema.validate(user);
+}
+
 
 module.exports = { User, validate };

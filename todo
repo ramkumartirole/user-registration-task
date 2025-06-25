@@ -1,0 +1,7 @@
+// 25/06/25
+1) validate if login is working fine?
+2) backend: implement get all users API at backend side & return the same -> /getAllUsers
+3) frontend:    
+    - login -> navigate -> userList
+    - hit API(/getAllUsers) -> response[{user1},{user2}]
+    - render it to grid

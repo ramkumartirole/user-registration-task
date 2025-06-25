@@ -3,7 +3,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Main from "./components/Main/Main.jsx";
 import Signup from "./components/Signup/Signup.jsx";
 import LoginForm from "./components/LoginForm/LoginForm.jsx";
-import RegistrationForm from "./components/RegistrationForm/RegistrationForm.jsx"
+ import RegistrationForm from "./components/RegistrationForm/RegistrationForm.jsx"
+ 
 
 function App() {
 	const user = localStorage.getItem("token");

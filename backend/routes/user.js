@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Registration route
-router.post("/", upload.single("profilePicture"), async (req, res) => {
+router.post("/register", upload.single("profilePicture"), async (req, res) => {
 	try {
 		// Extract form fields from multipart/form-data
 		const {
@@ -83,6 +83,7 @@ router.post("/", upload.single("profilePicture"), async (req, res) => {
 			profilePicture,
 		});
 
+		//db call/interaction
 		await newUser.save();
 
 		// Optional: generate token
@@ -96,8 +97,16 @@ router.post("/", upload.single("profilePicture"), async (req, res) => {
 		console.error("Registration error:", error);
 		res.status(500).send({ message: "Internal Server Error" });
 	}
+});
 
-	
+// GET /api/users/getAllUsers
+router.get("/getAllUsers", async (req, res) => {
+  try {
+    const users = await User.find().select("-password"); // Exclude passwords
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 module.exports = router;

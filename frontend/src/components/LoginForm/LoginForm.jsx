@@ -2,6 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+// import { useParams } from 'react-router-dom';
+// import ResetPassword from "../ForgotPassword/ResetPassword";
+// // ✅ get token from /reset-password/:token
+
+
 
 const LoginForm = () => {
 	const [data, setData] = useState({ email: "", password: "" });
@@ -52,6 +57,7 @@ const LoginForm = () => {
 			setResetMessage("Something went wrong.");
 		}
 	};
+	
 
 	return (
 		<div className={styles.login_container}>
@@ -81,7 +87,8 @@ const LoginForm = () => {
 						<div style={{ marginTop: "8px" }}>
 							<span
 								style={{ color: "#3498db", cursor: "pointer", fontSize: "14px" }}
-								onClick={() => setShowForgotPopup(true)}
+								 onClick={() => setShowForgotPopup(true)}
+								// onClick = {(handleReset)}
 							>
 								Forgot Password?
 							</span>
@@ -108,6 +115,8 @@ const LoginForm = () => {
 				<div className={styles.popup}>
 					<div className={styles.popup_content}>
 						<h3>Reset Password</h3>
+						
+							
 						<input
 							type="email"
 							placeholder="Enter your registered email"
@@ -140,3 +149,7 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+
+
+

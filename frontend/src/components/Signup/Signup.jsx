@@ -1,4 +1,5 @@
 import { useState } from "react";
+// axios to POST the data
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
@@ -87,7 +88,7 @@ const Signup = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/users";
+			const url = "http://localhost:8080/api/users/register";
 			const payload = new FormData();
 			for (const key in formData) {
 				if (key === "areaOfInterest") {
