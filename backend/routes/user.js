@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+// const nodemailer = require("nodemailer")
 
 // Multer storage config
 const storage = multer.diskStorage({
@@ -153,28 +154,52 @@ router.put("/updateUser/:id", async (req, res) => {
 
 const nodemailer = require("nodemailer"); // if you're sending reset link
 
+// POST /api/auth/forgot-password
+// router.post("/forgot-password", async (req, res) => {
+//   const { email } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     console.log(`Send reset link to: ${email}`);
+//     return res.status(200).json({ message: "Reset email sent" });
+//   } catch (err) {
+//     console.error("Forgot password error:", err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+
 router.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
-  try {
-    const user = await User.findOne({ email });
+	const { email } = req.body;
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+	try {
+		const user = await User.findOne({ email });
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
 
-    // Example: send reset email (you can replace with real logic)
-    console.log(`Send reset link to: ${email}`);
-    return res.status(200).json({ message: "Reset email sent" });
-  } catch (err) {
-    console.error("Forgot password error:", err);
-    res.status(500).json({ message: "Server error" });
-  }
+		// Simulate reset email link
+		const dummyLink = `http://localhost:3000/reset-password/${user._id}`;
+		return res.status(200).json({
+			message: "Reset email sent",
+			resetLink: dummyLink,
+		});
+	} catch (err) {
+		console.error("Forgot password error:", err);
+		res.status(500).json({ message: "Server error" });
+	}
 });
 
-module.exports = router;
 
 
 module.exports = router;
+
+
+
 
 
 

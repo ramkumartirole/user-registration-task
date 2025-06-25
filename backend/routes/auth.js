@@ -5,7 +5,7 @@ const Joi = require("joi");
 const bcrypt = require("bcrypt");
 
 // Login route
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
 	try {
 		const { error } = validate(req.body);
 		if (error)
