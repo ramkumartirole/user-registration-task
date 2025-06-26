@@ -7,13 +7,19 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   city: { type: String, required: true },
-  state: { type: String, required: true },  // State as a string
-  country: { type: String, required: true }, // Country as a string
+  state: { type: String, required: true },
+  country: { type: String, required: true },
   zip: { type: String, required: true },
   areaOfInterest: { type: [String], required: true },
   gender: { type: String, required: true },
+
+  
+  profilePicture: { type: String },
+
+  // For password reset
+  resetToken: String,
+  resetTokenExpiration: Date,
 });
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;
