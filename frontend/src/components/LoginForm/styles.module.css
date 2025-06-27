@@ -96,3 +96,20 @@
 	color: white;
 	margin: 10px;
 }
+
+
+
+.forgot_link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.forgot_link a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.forgot_link a:hover {
+  text-decoration: underline;
+}

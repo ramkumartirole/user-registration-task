@@ -1,10 +1,17 @@
+const express = require('express');
 const router = require("express").Router();
 const { User, validate } = require("../module/user");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-// const nodemailer = require("nodemailer")
+const app = express();
+// const cors = require('cors');
+
+// app.use(cors({
+//   origin: 'http://localhost:3000/reset-password', // replace with frontend origin
+//   credentials: true
+// }));
 
 // Multer storage config
 const storage = multer.diskStorage({
@@ -154,50 +161,76 @@ router.put("/updateUser/:id", async (req, res) => {
 
 const nodemailer = require("nodemailer"); // if you're sending reset link
 
-// POST /api/auth/forgot-password
-// router.post("/forgot-password", async (req, res) => {
-//   const { email } = req.body;
+// POST /api/users/forgot-password
+router.post('/forgot-password', (req, res) => {
+    const {email} = req.body;
+    UserModel.findOne({email: email})
+    .then(user => {
+        if(!user) {
+            return res.send({Status: "User not existed"})
+        } 
+        const token = jwt.sign({id: user._id}, "jwt_secret_key", {expiresIn: "1d"})
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'dixitgarima24@gmail.com',
+              pass: 'your password'
+            }
+          });
+          
+          var mailOptions = {
+            from: 'youremail@gmail.com',
+            to: 'user email@gmail.com',
+            subject: 'Reset Password Link',
+            text: `http://localhost:5173/reset_password/${user._id}/${token}`
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              return res.send({Status: "Success"})
+            }
+          });
+    })
+})
 
-//   try {
-//     const user = await User.findOne({ email });
+//POST /api/users/reset-password
+router.post('/reset-password', async (req, res) => {
+  try {
+    console.log("Received Body:", req.body);
+    const {email, password} = req.body
 
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
+   
+    console.log(email);
+    console.log(password);
 
-//     console.log(`Send reset link to: ${email}`);
-//     return res.status(200).json({ message: "Reset email sent" });
-//   } catch (err) {
-//     console.error("Forgot password error:", err);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// });
+    const user = await User.findOne({ email });
+    console.log("before update: " + user);
 
-router.post("/forgot-password", async (req, res) => {
-	const { email } = req.body;
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-	try {
-		const user = await User.findOne({ email });
-		if (!user) {
-			return res.status(404).json({ message: "User not found" });
-		}
+    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+		const hashedPassword = await bcrypt.hash(password, salt);
 
-		// Simulate reset email link
-		const dummyLink = `http://localhost:3000/reset-password/${user._id}`;
-		return res.status(200).json({
-			message: "Reset email sent",
-			resetLink: dummyLink,
-		});
-	} catch (err) {
-		console.error("Forgot password error:", err);
-		res.status(500).json({ message: "Server error" });
-	}
-});
+    user.password = hashedPassword;
+    await user.save();
+    console.log("after update: " + user);
+    res.status(200).json({ message: 'Password updated successfully' });
+    // res.status(200).send({ message: "email-password received" });
+  } catch (err) {
+    console.error('Reset password error:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
+
+
 
 
 
 module.exports = router;
-
 
 
 

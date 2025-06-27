@@ -1,9 +1,10 @@
-
 import { Route, Routes, Navigate } from "react-router-dom";
 import Main from "./components/Main/Main.jsx";
 import Signup from "./components/Signup/Signup.jsx";
 import LoginForm from "./components/LoginForm/LoginForm.jsx";
  import RegistrationForm from "./components/RegistrationForm/RegistrationForm.jsx"
+ import ForgotPassword from "./components/ForgotPassword/ForgotPassword.jsx";
+ import ResetPassword from "./components/ResetPassword/ResetPassword.jsx"
  
 
 function App() {
@@ -15,7 +16,10 @@ function App() {
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<LoginForm />} />
 			<Route path="*" element={<Navigate replace to="/login" />} />
-      <Route path="/register" element={<RegistrationForm />} />
+      		<Route path="/register" element={<RegistrationForm />} />
+			<Route path="/forgot-password" element={< ForgotPassword  />} />
+			<Route path="/reset-password"  element={<ResetPassword />} />
+	  
 		</Routes>
 
 	);

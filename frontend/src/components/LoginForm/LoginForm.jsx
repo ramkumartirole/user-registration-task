@@ -2,14 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+// import ForgotPassword from "../ForgotPassword/ForgotPassword";
 
 const LoginForm = () => {
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
-	const [showForgotPopup, setShowForgotPopup] = useState(false);
-	const [forgotEmail, setForgotEmail] = useState("");
-	const [resetMessage, setResetMessage] = useState("");
-	const [fallbackLink, setFallbackLink] = useState("");
 
 	const navigate = useNavigate();
 
@@ -19,6 +16,10 @@ const LoginForm = () => {
 
 	const handleClick = () => {
 		navigate("/register");
+	};
+
+	const handleResetClick = () => {
+		navigate("/reset-password");
 	};
 
 	const handleSubmit = async (e) => {
@@ -38,21 +39,6 @@ const LoginForm = () => {
 			}
 		}
 	};
-
-	const handleForgotPassword = async () => {
-		try {
-			const response = await axios.post("http://localhost:8080/api/auth/forgot-password", {
-				email: forgotEmail,
-			});
-			setResetMessage(response.data.message);
-			if (response.data.resetLink) {
-				setFallbackLink(response.data.resetLink);
-			}
-		} catch (err) {
-			setResetMessage("Something went wrong.");
-		}
-	};
-	
 
 	return (
 		<div className={styles.login_container}>
@@ -78,18 +64,12 @@ const LoginForm = () => {
 							required
 							className={styles.input}
 						/>
-
-						<div style={{ marginTop: "8px" }}>
-							<span
-								style={{ color: "#3498db", cursor: "pointer", fontSize: "14px" }}
-								 onClick={() => setShowForgotPopup(true)}
-								// onClick = {(handleReset)}
-							>
-								Forgot Password?
-							</span>
-						</div>
-
 						{error && <div className={styles.error_msg}>{error}</div>}
+						<div className={styles.forgot_link}>
+							<Link to="/reset-password" onClick={handleResetClick}>
+								Forgot your password?
+							</Link>
+						</div>
 						<button type="submit" className={styles.green_btn}>
 							Sign In
 						</button>
@@ -105,40 +85,7 @@ const LoginForm = () => {
 				</div>
 			</div>
 
-			{/* Forgot Password Popup */}
-			{showForgotPopup && (
-				<div className={styles.popup}>
-					<div className={styles.popup_content}>
-						<h3>Reset Password</h3>
-						
-							
-						<input
-							type="email"
-							placeholder="Enter your registered email"
-							value={forgotEmail}
-							onChange={(e) => setForgotEmail(e.target.value)}
-							className={styles.input}
-						/>
-						<button className={styles.green_btn} onClick={handleForgotPassword}>
-							Send Reset Link
-						</button>
-						<button className={styles.white_btn} onClick={() => setShowForgotPopup(false)}>
-							Close
-						</button>
 
-						{resetMessage && <p style={{ marginTop: "10px" }}>{resetMessage}</p>}
-
-						{fallbackLink && (
-							<p style={{ marginTop: "10px" }}>
-								Email not working?{" "}
-								<a href={fallbackLink} target="_blank" rel="noopener noreferrer">
-									Click here to reset manually
-								</a>
-							</p>
-						)}
-					</div>
-				</div>
-			)}
 		</div>
 	);
 };

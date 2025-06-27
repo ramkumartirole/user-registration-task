@@ -35,6 +35,9 @@ function validate(user) {
     
     // ✅ Add this to allow confirmPassword
     confirmPassword: Joi.string().optional(),
+
+  resetToken: { type: String },
+  resetTokenExpires: { type: Date },
   });
 
   return schema.validate(user);
