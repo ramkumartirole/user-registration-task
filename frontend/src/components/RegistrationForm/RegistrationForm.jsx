@@ -21,6 +21,7 @@ const RegistrationForm = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
+
   const fetchStates = (country) => {
     fetch('https://countriesnow.space/api/v0.1/countries/states', {
       method: 'POST',
@@ -69,8 +70,8 @@ const RegistrationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    //setSuccessMessage('Registration successful!');
-    alert('Registration successful!');
+    // setSuccessMessage('Registration successful!');
+     alert('Registration successful!');
     setFormData({
       firstName: '',
       lastName: '',

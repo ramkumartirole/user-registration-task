@@ -12,7 +12,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #6c757d; /* Bootstrap secondary background */
+  background-color: #6c757d; 
+  /* Bootstrap secondary background */
 }
 
 /* Card style */
@@ -48,4 +49,24 @@ body {
 /* Submit button */
 .reset-card button {
   font-weight: 600;
+  background-color: #3bb19b;
+  margin: 10px;
+  color: white;
 }
+
+.message {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #d1e7dd; /* light green for success */
+  color: #0f5132;
+}
+
+.message.error {
+  background-color: #f8d7da; /* light red for error */
+  color: #842029;
+}
+
+

@@ -2,27 +2,39 @@ import React from 'react'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import './style.css'
+import  style from'./style.css'
 
 
 function ResetPassword() {
   const [data, setData] = useState({ email: "", password: "" });
+  // const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate()
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.post(`http://localhost:8080/api/users/reset-password`, data)
-      .then(res => {
-        if (res.data.Status === "Success") {
-          navigate("/LoginForm.jsx")
 
-        }
-      }).catch(err => console.log(err))
-  }
+const [message, setMessage] = useState(""); // 👈 Add this at the top
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  axios.post("http://localhost:8080/api/users/reset-password", data)
+    .then(res => {
+      setMessage(res.data.message); // 👈 show success message
+      setTimeout(() => {
+        navigate("/LoginForm"); // navigate after 2s (optional)
+      }, 2000);
+    })
+    .catch(err => {
+      if (err.response && err.response.data.message) {
+        setMessage(err.response.data.message); // 👈 show error message
+      } else {
+        setMessage("Something went wrong.");
+      }
+    });
+};
+
 
   return (
     // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
@@ -65,9 +77,20 @@ function ResetPassword() {
             Update
           </button>
         </form>
+          <div
+  className={`${style.message} ${
+    message.toLowerCase().includes("success") ? "" : style.error
+  }`}
+>
+  {message}
+</div>
 
       </div>
     </div>
+
+      
+
+
   )
 }
 

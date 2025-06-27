@@ -8,6 +8,7 @@ const LoginForm = () => {
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 
+
 	const navigate = useNavigate();
 
 	const handleChange = ({ currentTarget: input }) => {
