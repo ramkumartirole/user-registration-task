@@ -1,0 +1,46 @@
+{
+    "cards": [
+    {
+      "title": "White",
+      "link": "/van",
+      "img": "./images/white-removebg-preview.png",
+      "bgClass": "bg-white"
+    },
+    {
+      "title": "Black",
+     "link": "/van",
+      "img": "./images/black-removebg-preview.png",
+      "bgClass": "bg-dark text-white"
+    },
+    {
+      "title": "Blue Grey",
+     "link": "/van",
+      "img": "./images/blue-grey-removebg-preview.png",
+      "bgClass": "bg-primary bg-opacity-10"
+    },
+    {
+      "title": "Graphite Grey",
+      "link": "/van",
+      "img": "./images/graphite-grey-removebg-preview.png",
+      "bgClass": "bg-secondary bg-opacity-10"
+    },
+    {
+      "title": "Pebble",
+      "link": "/van",
+      "img": "./images/pebble-removebg-preview.png",
+      "bgClass": "bg-light"
+    },
+    {
+      "title": "Silver Grey",
+      "link": "/van",
+      "img": "./images/silver-grey-removebg-preview.png",
+      "bgClass": "bg-info bg-opacity-10"
+    },
+    {
+      "title": "Stone Grey",
+     "link": "/van",
+      "img": "./images/stone-grey-removebg-preview.png",
+      "bgClass": "bg-warning bg-opacity-10"
+    }
+  ]
+}

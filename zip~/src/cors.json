@@ -1,0 +1,19 @@
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "GET",
+            "HEAD",
+            "POST",
+            "OPTIONS"
+        ],
+        "AllowedOrigins": [
+            "http://localhost:5173",
+            "https://bigbearvans.d3pbrrligotzvl.amplifyapp.com/"
+        ],
+        "ExposeHeaders": [],
+        "MaxAgeSeconds": 3600
+    }
+]

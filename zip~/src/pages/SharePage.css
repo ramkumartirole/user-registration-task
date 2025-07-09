@@ -1,0 +1,42 @@
+.toggle-button-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}
+.toggle-button {
+  background-color: #707b86;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.loading-container {
+  position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    }
+      
+  .loading-spinner {
+      border: 8px solid rgba(0, 0, 0, 0.1);
+      border-top: 8px solid rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin .7s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  

@@ -1,0 +1,50 @@
+Job Title: Assistant Web Developer – MERN Stack
+
+Location: Remote 
+Type: Internship / Part-time (Final Year Student)
+Duration: 3 to 6 months (can be extended based on performance)
+
+
+
+  About the Role:
+
+We are looking for a passionate and self-driven Assistant Developer to support ongoing 3D Configurator projects using Three.js / React Three Fiber and also contribute to MERN stack development tasks. This is a fantastic opportunity to work closely with an experienced WebGL & Full Stack Developer and gain real-world exposure to cutting-edge web development practices.
+
+
+
+  What You'll Learn and Do:
+
+ Assist in building and maintaining 3D configurators (using WebGL / Three.js / React Three Fiber).
+ Contribute to MERN stack development (MongoDB, Express.js, React, Node.js).
+ Help organize and optimize 3D assets, with guidance on tools like Blender.
+ Collaborate on UI/UX for interactive product configurators.
+ Write clean, maintainable code and debug technical issues.
+ Learn to use tools like Git, GitHub, and Git LFS for version control.
+
+
+
+  Who Can Apply:
+
+ Final year B.E./B.Tech students (Computer Science or related field).
+ Eagerness to learn Blender and 3D asset optimization.
+ Good understanding of JavaScript and React.js.
+ Familiarity with basic Git commands and project structure.
+ Willingness to learn and work in a fast-paced environment.
+
+
+
+  Good to Have:
+
+ Exposure to Three.js / React Three Fiber / WebGL.
+ Basic MERN stack project or portfolio.
+ Any personal side-projects on GitHub.
+
+
+
+  Perks:
+
+ Real-world project exposure.
+ Certificate of Completion.
+ Mentorship & code reviews.
+ Flexible work schedule.
+ Possibility of full-time offer after graduation.

@@ -1,0 +1,298 @@
+.loading {
+  font-size: 2em;
+  color: #858484;
+  position: absolute;
+  left: 40%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bbv-mobile-tab .tab button {
+  color: #000;
+}
+
+.accordion-button:hover {
+  background-color: #b5d0d7;
+  color: #000;
+}
+.btns {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btns:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+.lil-gui {
+  position: fixed !important;
+  top: 100px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+}
+
+.color-block {
+  height: 50px;
+  width: 50px;
+  background-position: center;
+  background-size: 250px;
+  background-repeat: no-repeat;
+  border-radius: 50% !important;
+  margin: 10px 0px;
+}
+
+.car-model {
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.car-model:hover {
+  background-color: #b9adad38;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: none;
+}
+
+/* .carousel-inner img {
+  height: 600px;
+} */
+
+.car-model .list-group-item {
+  background: transparent;
+}
+
+.single-image {
+  text-align: center;
+}
+
+.single-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.accordion-body {
+  padding: 10px 20px;
+}
+
+.bbv-mobile-tab {
+  display: none;
+}
+
+
+
+.bbv-sidebar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.bbv-sidebar::-webkit-scrollbar-thumb {
+  background-color:  #385864 ;
+  border-radius: 10px;
+}
+
+.bvv-rotate-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 9999;
+  font-size: 1.5rem;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.bvv-rotate-message p {
+  margin: 0;
+  animation: fadeInOut 2s infinite ease-in-out;
+}
+
+/* Optional: Add a subtle animation */
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+.card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.canvas-container {
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  position: relative;
+}
+
+@media (max-width: 599px) {
+  .canvas-container {
+    height: 50vh;
+  }
+  .loading {
+    font-size: 2em;
+    color: #858484;
+    position: absolute;
+    left: 50%;
+    top:25%;
+    transform: translate(-50%, -50%);
+  }
+}
+.bbv-save-export-btn {
+
+position: fixed;
+width: -webkit-fill-available;
+bottom:0;
+background-color: #ffffff;
+/* box-shadow: 0px 0px 0px 5px rgb(211, 210, 210); */
+backdrop-filter: blur(10px);
+z-index: 10000;
+
+}
+.bbv-page-nav {
+  padding:20px 10px 10px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: -webkit-fill-available;
+  background-color: #ffffff;
+  border: 1px solid rgb(255, 255, 255);
+  justify-content: center;
+  align-items: center;
+
+
+
+}
+
+
+.popup-message {
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff6b6b;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  opacity: 0.9;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #007bff;
+}
+
+/* Add this to your CSS */
+.view-buttons {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  display: flex;
+  gap: 5px;
+}
+
+.view-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.view-buttons button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Sticky Progress Bar */
+.progress-container {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 12px 0;
+  z-index: 1000;
+}
+
+/* Sticky Step Heading & Description */
+.step-info-container {
+  position: sticky;
+  top: 0px; /* Below progress bar */
+  background: white;
+  padding: 10px 0;
+  z-index: 999;
+}
+
+/* Sticky Previous & Next Buttons */
+.pagination-container {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding: 10px;
+  z-index: 1000;
+}
+.step-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 9px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 9px;
+  margin: 0 5px;
+}
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quantity {
+  font-weight: bold;
+  min-width: 25px;
+  text-align: center;
+}
+
+button.btn-sm {
+  padding: 5px 10px;
+}
+/* Home page Css */
+
